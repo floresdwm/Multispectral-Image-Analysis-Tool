@@ -159,6 +159,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Converters\BitmapSourceConvert.cs" />
     <Compile Include="Helpers\TypeConverter.cs" />
+    <Compile Include="Hsi\FileIO.cs" />
     <Compile Include="Models\ClassCornerPoints.cs" />
     <Compile Include="Models\ClassPixels.cs" />
     <Compile Include="Models\DirectoryItem.cs" />
@@ -348,6 +349,12 @@
     <Content Include="vcruntime140.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\sharphyperlib\SharpHyperLib\HyperLib\HyperLib.csproj">
+      <Project>{eac6d464-1a70-48f0-90ce-6d588c3b763c}</Project>
+      <Name>HyperLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.2.5.0\build\Fody.targets" Condition="Exists('..\packages\Fody.2.5.0\build\Fody.targets')" />

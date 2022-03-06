@@ -19,6 +19,7 @@ using BeyonSense.Converters;
 using Emgu.CV.ML;
 using System.Diagnostics;
 using BeyonSense.Helpers;
+using BeyonSense.Hsi;
 
 namespace BeyonSense.ViewModels
 {
@@ -856,6 +857,10 @@ namespace BeyonSense.ViewModels
             {
                 //Selected Folder Path
                 RootPath = folderDialog.SelectedPath;
+
+                //try to open HSI
+                FileIO.HyperLibOpenFIle(RootPath);
+
             }
         }
 
