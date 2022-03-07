@@ -58,12 +58,51 @@ namespace HyperLib
         /// <param name="greenIndex">The band index representing Green channel</param>
         /// <param name="blueIndex">The band index representing Blue channel</param>
         /// <returns></returns>
-        public static Bitmap ToBitmap(double[,,] imageVector, int redIndex, int greenIndex, int blueIndex)
+        public static Bitmap ToBitmap(float[,,] imageVector, int redIndex, int greenIndex, int blueIndex)
         {
             ImageCube image = new ImageCube("");
             image.ImageVector = imageVector;
             return image.ToBitmap(redIndex, greenIndex, blueIndex);
         }
+
+        /// <summary>
+        ///  Converts the current ImageCube to a Bitmap object
+        /// </summary>
+        /// <param name="redIndex">The band index representing Red channel</param>
+        /// <param name="greenIndex">The band index representing Green channel</param>
+        /// <param name="blueIndex">The band index representing Blue channel</param>
+        /// <returns>A bitmap of the current ImageCube</returns>
+        public Bitmap ToBitmapRotated(int redIndex, int greenIndex, int blueIndex)
+        {
+            int[,,] triBandImageVector = NormalizeImageVectorForDisplayRotated(redIndex, greenIndex, blueIndex);
+            Bitmap inputImage = new Bitmap(ImageVectorRotated.GetLength(0), ImageVectorRotated.GetLength(1));
+            FastBitmap currentTRIBandImage = new FastBitmap(inputImage);
+            currentTRIBandImage.LockImage();
+            for (int i = 0; i < inputImage.Width; i++)
+            {
+                for (int j = 0; j < inputImage.Height; j++)
+                {
+                    currentTRIBandImage.SetPixel(i, j, Color.FromArgb(triBandImageVector[i, j, 0], triBandImageVector[i, j, 1], triBandImageVector[i, j, 2]));
+                }
+            }
+            currentTRIBandImage.UnlockImage();
+            return inputImage;
+        }
+        /// <summary>
+        /// Converts the input ImageCube vector to a Bitmap object
+        /// </summary>
+        /// <param name="imageVector">3- dimensional vector representing the image cube</param>
+        /// <param name="redIndex">The band index representing Red channel</param>
+        /// <param name="greenIndex">The band index representing Green channel</param>
+        /// <param name="blueIndex">The band index representing Blue channel</param>
+        /// <returns></returns>
+        public static Bitmap ToBitmapRotated(Int16[,,] imageVector, int redIndex, int greenIndex, int blueIndex)
+        {
+            ImageCube image = new ImageCube("");
+            image.ImageVectorRotated = imageVector;
+            return image.ToBitmapRotated(redIndex, greenIndex, blueIndex);
+        }
+
         /// <summary>
         /// Used internally to find the max. and min. values of the band.
         /// </summary>
@@ -87,10 +126,32 @@ namespace HyperLib
             return maxValue;
         }
         /// <summary>
+        /// Used internally to find the max. and min. values of the band.
+        /// </summary>
+        /// <param name="colorBandIndex">The band index</param>
+        /// <returns>an array of 2 values , [0]: min value, [1]: Max. value</returns>
+        private double[] RangeValuesForRotated(int colorBandIndex)
+        {
+            double[] maxValue = new double[2];
+            Parallel.For(0, ImageVectorRotated.GetLength(0), i =>
+            //for (int i = 0; i < ImageVector.GetLength(0); i++)
+            {
+                for (int j = 0; j < ImageVectorRotated.GetLength(1); j++)
+                {
+                    if (maxValue[0] < ImageVectorRotated[i, j, colorBandIndex])
+                        maxValue[0] = ImageVectorRotated[i, j, colorBandIndex];
+                    //...........................................................
+                    if (maxValue[1] > ImageVectorRotated[i, j, colorBandIndex])
+                        maxValue[1] = ImageVectorRotated[i, j, colorBandIndex];
+                }
+            });
+            return maxValue;
+        }
+        /// <summary>
         /// Loads the Whole Hyperspectral Image into a 3-dimensional array , Saved in the Property : ImageVector
         /// </summary>
         /// <returns>The 3-dimentional array loaded</returns>
-        public double[, ,] LoadImageCube()
+        public float[, ,] LoadImageCube()
         {
             ImageVector = currentFormateObj.LoadImageCube();
             return ImageVector;
@@ -100,7 +161,7 @@ namespace HyperLib
         /// </summary>
         /// <param name="currentWindowToLoad">The required region of the image to be loaded</param>
         /// <returns>The 3-dimentional array of the sub section of the Hyperspectral image loaded </returns>
-        public double[, ,] LoadImageCube_withSubWindow(ImageSubWindow currentWindowToLoad)
+        public float[, ,] LoadImageCube_withSubWindow(ImageSubWindow currentWindowToLoad)
         {
             ImageVector = currentFormateObj.LoadImageCube_withSubWindow(currentWindowToLoad);
             return ImageVector;
@@ -111,7 +172,7 @@ namespace HyperLib
         /// <param name="bandIndex">A zero based index of the band required for loading</param>
         /// <param name="currentWindowToLoad">The required region of the image to be loaded</param>
         /// <returns>The 3-dimentional array of the sub section of the Hyperspectral image loaded </returns>
-        public double[, ,] LoadImageSingleBand(int bandIndex, ImageSubWindow currentWindowToLoad)
+        public float[, ,] LoadImageSingleBand(int bandIndex, ImageSubWindow currentWindowToLoad)
         {
             if (bandIndex < 0)
             {
@@ -149,6 +210,36 @@ namespace HyperLib
                     triBandImageVector[i, j, 0] = (int)(ImageVector[i, j, redIndex] * 255d / redmaxValue[0]);
                     triBandImageVector[i, j, 1] = (int)(ImageVector[i, j, greenIndex] * 255d / greenmaxValue[0]);
                     triBandImageVector[i, j, 2] = (int)(ImageVector[i, j, blueIndex] * 255d / bluemaxValue[0]);
+                }
+            }
+            return triBandImageVector;
+        }
+
+        /// <summary>
+        /// Used interrnally to normalize the image vector for RGB display
+        /// </summary>
+        /// <param name="redIndex">The band index representing Red channel</param>
+        /// <param name="greenIndex">The band index representing Green channel</param>
+        /// <param name="blueIndex">The band index representing Blue channel</param>
+        /// <returns>3-dimentional normalized image ready for display</returns>
+        private int[,,] NormalizeImageVectorForDisplayRotated(int redIndex, int greenIndex, int blueIndex)
+        {
+            int[,,] triBandImageVector = new int[ImageVectorRotated.GetLength(0), ImageVectorRotated.GetLength(1), 3];
+            //.................................................................
+            double[] redmaxValue = RangeValuesForRotated(redIndex);
+            double[] greenmaxValue = RangeValuesForRotated(greenIndex);
+            double[] bluemaxValue = RangeValuesForRotated(blueIndex);
+            //.................................................................
+            int redRange = (int)(redmaxValue[0] - redmaxValue[1]);
+            int greenRange = (int)(greenmaxValue[0] - greenmaxValue[1]);
+            int blueRange = (int)(bluemaxValue[0] - bluemaxValue[1]);
+            for (int i = 0; i < ImageVectorRotated.GetLength(0); i++)
+            {
+                for (int j = 0; j < ImageVectorRotated.GetLength(1); j++)
+                {
+                    triBandImageVector[i, j, 0] = (int)(ImageVectorRotated[i, j, redIndex] * 255d / redmaxValue[0]);
+                    triBandImageVector[i, j, 1] = (int)(ImageVectorRotated[i, j, greenIndex] * 255d / greenmaxValue[0]);
+                    triBandImageVector[i, j, 2] = (int)(ImageVectorRotated[i, j, blueIndex] * 255d / bluemaxValue[0]);
                 }
             }
             return triBandImageVector;

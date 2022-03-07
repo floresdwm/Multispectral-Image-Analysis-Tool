@@ -81,7 +81,13 @@ namespace HyperLib
                 _pixelType = value;
             }
         }
-        public double[, ,] ImageVector
+        public float[, ,] ImageVector
+        {
+            get;
+            protected set;
+        }
+
+        public Int16[,,] ImageVectorRotated
         {
             get;
             protected set;

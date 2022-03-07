@@ -32,7 +32,7 @@ namespace BeyonSense.Hsi
                 SpectralCube sc = new SpectralCube(PictureFilePath);
                 Console.WriteLine("SpectralCube ok");
 
-                double[,,] img = sc.currentFormateObj.LoadImageCube();
+                float[,,] img = sc.currentFormateObj.LoadImageCube();
                 Console.WriteLine("Imagecube ok");
 
                 Bitmap bmp_img = ImageCube.ToBitmap(img, 129, 82, 38);
@@ -75,21 +75,21 @@ namespace BeyonSense.Hsi
 
                 SpectralCube sc = new SpectralCube(PictureFilePath);
                 Console.WriteLine("SpectralCube ok");
-
-                double[,,] img = sc.currentFormateObj.LoadImageCube();
-                Console.WriteLine("Imagecube ok");
+                
+                float[,,] img = sc.currentFormateObj.LoadImageCube();
 
                 Bitmap bmp_img = ImageCube.ToBitmap(img, 129, 82, 38);
                 Console.WriteLine("Bitmap img ok");
 
-                if(bmp_img != null)
+                if (bmp_img != null)
                 {
                     return Convert(bmp_img);
                 }
                 else
                 {
                     return null;
-                }  
+                }
+                                 
 
             }
             catch (Exception e)

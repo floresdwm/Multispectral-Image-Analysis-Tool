@@ -54,16 +54,16 @@ namespace HyperLib
             { return _header; }
         }
         public string PictureFilePath { get; set; }
-        public abstract double[, ,] LoadImageCube();
+        public abstract float[, ,] LoadImageCube();
         public abstract Int16[, ,] LoadRotatedImageCube();
 
-        public abstract double[, ,] LoadImageCube_withSubWindow(ImageSubWindow currentWindowToLoad);
+        public abstract float[, ,] LoadImageCube_withSubWindow(ImageSubWindow currentWindowToLoad);
         public abstract float[] LoadImageCube_withSubWindow_InSingleArray(ImageSubWindow currentWindowToLoad);      
-        public double[, ,] LoadImageSingleBand(int bandIndex)
+        public float[, ,] LoadImageSingleBand(int bandIndex)
         {
             return LoadImageSingleBand(bandIndex, null);
         }
-        public abstract double[, ,] LoadImageSingleBand(int bandIndex, ImageSubWindow currentWindowToLoad);
+        public abstract float[, ,] LoadImageSingleBand(int bandIndex, ImageSubWindow currentWindowToLoad);
         public abstract void WriteImageCube_withSubWindow(ImageSubWindow currentWindowToLoad, string outputFilePath);
         protected void WriteSubWindowHeader(ImageSubWindow currentWindowToLoad, string outputFilePath)
         {
@@ -112,9 +112,9 @@ namespace HyperLib
 
         #endregion Constructors
 
-        public override double[, ,] LoadImageCube()
+        public override float[, ,] LoadImageCube()
         {
-            double[, ,] ImageVector = new double[Header.Samples, Header.Lines, Header.Bands];
+            float[, ,] ImageVector = new float[Header.Samples, Header.Lines, Header.Bands];
             using (BinaryReader imageReader = new BinaryReader(new FileStream(PictureFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {
                 for (int b = 0; b < Header.Bands; b++)
@@ -150,9 +150,9 @@ namespace HyperLib
             }
             return ImageVector;
         }
-        public override double[, ,] LoadImageCube_withSubWindow(ImageSubWindow currentWindowToLoad)
+        public override float[, ,] LoadImageCube_withSubWindow(ImageSubWindow currentWindowToLoad)
         {
-            double[, ,] ImageVector = new double[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, Header.Bands];
+            float[, ,] ImageVector = new float[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, Header.Bands];
             using (BinaryReader imageReader = new BinaryReader(new FileStream(PictureFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {
                 for (int b = 0; b < Header.Bands; b++)
@@ -225,14 +225,14 @@ namespace HyperLib
             }
             return ImageVector;
         }       
-        public override double[, ,] LoadImageSingleBand(int bandIndex, ImageSubWindow currentWindowToLoad)
+        public override float[, ,] LoadImageSingleBand(int bandIndex, ImageSubWindow currentWindowToLoad)
         {
             if (currentWindowToLoad == null)
             {
                 currentWindowToLoad = new ImageSubWindow() { xStart = 0, xEnd = Header.Samples, yStart = 0, yEnd = Header.Lines };
             }
             //..............................................................
-            double[, ,] ImageVector = new double[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, 1];
+            float[, ,] ImageVector = new float[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, 1];
             using (BinaryReader imageReader = new BinaryReader(new FileStream(PictureFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {
                 imageReader.BaseStream.Position += bandIndex * Header.Lines * Header.Samples * PixelType.Size();
@@ -318,9 +318,9 @@ namespace HyperLib
 
         #endregion Constructors
 
-        public override double[, ,] LoadImageCube()
+        public override float[, ,] LoadImageCube()
         {
-            double[, ,] ImageVector = new double[Header.Samples, Header.Lines, Header.Bands];
+            float[, ,] ImageVector = new float[Header.Samples, Header.Lines, Header.Bands];
             using (BinaryReader imageReader = new BinaryReader(new FileStream(PictureFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {
                 for (int l = 0; l < Header.Lines; l++)
@@ -356,9 +356,9 @@ namespace HyperLib
             }
             return ImageVector;
         }
-        public override double[, ,] LoadImageCube_withSubWindow(ImageSubWindow currentWindowToLoad)
+        public override float[, ,] LoadImageCube_withSubWindow(ImageSubWindow currentWindowToLoad)
         {
-            double[, ,] ImageVector = new double[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, Header.Bands];
+            float[, ,] ImageVector = new float[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, Header.Bands];
             using (BinaryReader imageReader = new BinaryReader(new FileStream(PictureFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {
                 //  Set Seek Position -- Skip NON required Lines                
@@ -430,14 +430,14 @@ namespace HyperLib
             }
             return ImageVector;
         }      
-        public override double[, ,] LoadImageSingleBand(int bandIndex, ImageSubWindow currentWindowToLoad)
+        public override float[, ,] LoadImageSingleBand(int bandIndex, ImageSubWindow currentWindowToLoad)
         {
             if (currentWindowToLoad == null)
             {
                 currentWindowToLoad = new ImageSubWindow() { xStart = 0, xEnd = Header.Samples, yStart = 0, yEnd = Header.Lines };
             }
             //..............................................................
-            double[, ,] ImageVector = new double[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, 1];
+            float[, ,] ImageVector = new float[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, 1];
             using (BinaryReader imageReader = new BinaryReader(new FileStream(PictureFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {
                 imageReader.BaseStream.Position += currentWindowToLoad.yStart * Header.Samples * Header.Bands * PixelType.Size();
@@ -525,9 +525,9 @@ namespace HyperLib
 
         #endregion Constructors
 
-        public override double[, ,] LoadImageCube()
+        public override float[, ,] LoadImageCube()
         {
-            double[, ,] ImageVector = new double[Header.Samples, Header.Lines, Header.Bands];
+            float[, ,] ImageVector = new float[Header.Samples, Header.Lines, Header.Bands];
             using (BinaryReader imageReader = new BinaryReader(new FileStream(PictureFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {
                 for (int l = 0; l < Header.Lines; l++)
@@ -563,9 +563,9 @@ namespace HyperLib
             }
             return ImageVector;
         }
-        public override double[, ,] LoadImageCube_withSubWindow(ImageSubWindow currentWindowToLoad)
+        public override float[, ,] LoadImageCube_withSubWindow(ImageSubWindow currentWindowToLoad)
         {
-            double[, ,] ImagePixels = new double[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, Header.Bands];
+            float[, ,] ImagePixels = new float[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, Header.Bands];
             using (BinaryReader imageReader = new BinaryReader(new FileStream(PictureFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {
                 // Set Seek Position -- Pixels NOT needed @ Start
@@ -627,14 +627,14 @@ namespace HyperLib
             }
             return ImagePixels;
         }
-        public override double[, ,] LoadImageSingleBand(int bandIndex, ImageSubWindow currentWindowToLoad)
+        public override float[, ,] LoadImageSingleBand(int bandIndex, ImageSubWindow currentWindowToLoad)
         {
             if (currentWindowToLoad == null)
             {
                 currentWindowToLoad = new ImageSubWindow() { xStart = 0, xEnd = Header.Samples, yStart = 0, yEnd = Header.Lines };
             }
             //..............................................................
-            double[, ,] ImageVector = new double[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, 1];
+            float[, ,] ImageVector = new float[currentWindowToLoad.xEnd - currentWindowToLoad.xStart, currentWindowToLoad.yEnd - currentWindowToLoad.yStart, 1];
             using (BinaryReader imageReader = new BinaryReader(new FileStream(PictureFilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
             {
                 imageReader.BaseStream.Position += currentWindowToLoad.yStart * Header.Samples * Header.Bands * PixelType.Size();
@@ -788,7 +788,7 @@ namespace HyperLib
 
         }
 
-        public static double AssignPixelValue(BinaryReader imageReader, int byteOrder, Enumerations pixelType)
+        public static float AssignPixelValue(BinaryReader imageReader, int byteOrder, Enumerations pixelType)
         {
             if (byteOrder != 1)
                 return LoadPixelBandValue(imageReader, pixelType, byteOrder);
@@ -796,7 +796,7 @@ namespace HyperLib
                 return LoadPixelBandValue_BigEndian(imageReader, pixelType, byteOrder);
         }
 
-        public static double LoadPixelBandValue(BinaryReader imageReader, Enumerations pixelType, int byteOrder)
+        public static float LoadPixelBandValue(BinaryReader imageReader, Enumerations pixelType, int byteOrder)
         {
             if (byteOrder != 0)
                 return LoadPixelBandValue_BigEndian(imageReader, pixelType, byteOrder);
@@ -804,22 +804,22 @@ namespace HyperLib
 
                 switch (pixelType)
                 {
-                    case Enumerations.uint8:
-                        return Convert.ToDouble(imageReader.ReadByte());
+                    case Enumerations.uint8:                        
+                        return (float)Convert.ToDouble(imageReader.ReadByte());
                     case Enumerations.int16:
-                        return Convert.ToDouble(imageReader.ReadInt16());
+                        return (float)Convert.ToDouble(imageReader.ReadInt16());
                     case Enumerations.int32:
-                        return Convert.ToDouble(imageReader.ReadInt32());
+                        return (float)Convert.ToDouble(imageReader.ReadInt32());
                     case Enumerations.single:
-                        return Convert.ToDouble(imageReader.ReadSingle());
+                        return (float)Convert.ToDouble(imageReader.ReadSingle());
                     case Enumerations.envidouble:
-                        return Convert.ToDouble(imageReader.ReadDouble());
+                        return (float)Convert.ToDouble(imageReader.ReadDouble());
                     case Enumerations.uint32:
-                        return Convert.ToDouble(imageReader.ReadUInt32());
+                        return (float)Convert.ToDouble(imageReader.ReadUInt32());
                     case Enumerations.int64:
-                        return Convert.ToDouble(imageReader.ReadInt64());
+                        return (float)Convert.ToDouble(imageReader.ReadInt64());
                     case Enumerations.uint16:
-                        return Convert.ToDouble(imageReader.ReadUInt16());
+                        return (float)Convert.ToDouble(imageReader.ReadUInt16());
                     default:
                         return 0;
                 }
@@ -827,7 +827,7 @@ namespace HyperLib
         }
 
         //...................................................
-        public static double LoadPixelBandValue_BigEndian(BinaryReader imageReader, Enumerations PixelType, int ByteOrder)
+        public static float LoadPixelBandValue_BigEndian(BinaryReader imageReader, Enumerations PixelType, int ByteOrder)
         {
             if (ByteOrder != 1)
                 return LoadPixelBandValue(imageReader, PixelType, ByteOrder);
@@ -835,21 +835,21 @@ namespace HyperLib
                 switch (PixelType)
                 {
                     case Enumerations.uint8:
-                        return Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToSingle(new byte[] { imageReader.ReadByte() }, 0));
+                        return (float)Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToSingle(new byte[] { imageReader.ReadByte() }, 0));
                     case Enumerations.int16:
-                        return Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToInt16(imageReader.ReadBytes(2), 0));
+                        return (float)Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToInt16(imageReader.ReadBytes(2), 0));
                     case Enumerations.int32:
-                        return Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToInt32(imageReader.ReadBytes(4), 0));
+                        return (float)Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToInt32(imageReader.ReadBytes(4), 0));
                     case Enumerations.single:
-                        return Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToSingle(imageReader.ReadBytes(4), 0));
+                        return (float)Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToSingle(imageReader.ReadBytes(4), 0));
                     case Enumerations.envidouble:
-                        return MiscUtil.Conversion.BigEndianBitConverter.Big.ToDouble(imageReader.ReadBytes(8), 0);
+                        return (float)MiscUtil.Conversion.BigEndianBitConverter.Big.ToDouble(imageReader.ReadBytes(8), 0);
                     case Enumerations.uint32:
-                        return Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToUInt32(imageReader.ReadBytes(4), 0));
+                        return (float)Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToUInt32(imageReader.ReadBytes(4), 0));
                     case Enumerations.int64:
-                        return Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToInt64(imageReader.ReadBytes(8), 0));
+                        return (float)Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToInt64(imageReader.ReadBytes(8), 0));
                     case Enumerations.uint16:
-                        return Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToUInt16(imageReader.ReadBytes(2), 0));
+                        return (float)Convert.ToDouble(MiscUtil.Conversion.BigEndianBitConverter.Big.ToUInt16(imageReader.ReadBytes(2), 0));
                     default:
                         return 0;
                 }

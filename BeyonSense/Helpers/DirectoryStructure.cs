@@ -54,7 +54,7 @@ namespace BeyonSense
                 if (fs.Length > 0)
                     for (int i = 0; i < fs.Count(); i++)
                     {
-                        if (fs[i].EndsWith(".raw"))
+                        if (fs[i].EndsWith(".raw") && fs[i].ToLower().Contains("darkref") == false && fs[i].ToLower().Contains("whiteref") == false)
                         {
                             items.Add(new DirectoryItem { FullPath = fs[i], Type = DirectoryItemType.File });
                         }

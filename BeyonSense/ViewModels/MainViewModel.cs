@@ -831,7 +831,7 @@ namespace BeyonSense.ViewModels
         /// </summary>
         public MainViewModel()
         {
-            MainBmpImage = DefaultImageSource();
+            MainBmpImage = DefaultImageSource();            
         }
 
         #endregion
@@ -952,9 +952,16 @@ namespace BeyonSense.ViewModels
                     switch (exetension)
                     {
                         case ".raw": //.bmp
-                            BmpList.Add(filePath);
-                            num_bmp++;
-                            break;
+                            if(filePath.ToLower().Contains("whiteref") == false && filePath.ToLower().Contains("darkref") == false)
+                            {
+                                BmpList.Add(filePath);
+                                num_bmp++;
+                                break;
+                            }
+                            else
+                            {
+                                break;
+                            }                         
 
                         case ".csv":
                             // Save a csv file path to the local variable
