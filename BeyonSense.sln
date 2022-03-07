@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeyonSense", "BeyonSense\Be
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperLib", "sharphyperlib\SharpHyperLib\HyperLib\HyperLib.csproj", "{EAC6D464-1A70-48F0-90CE-6D588C3B763C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabToolsAnalytics", "LabToolsAnalytics\LabToolsAnalytics.csproj", "{E97D949D-5632-4D78-8F94-290C0C786CCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{EAC6D464-1A70-48F0-90CE-6D588C3B763C}.Release|x64.Build.0 = Release|Any CPU
 		{EAC6D464-1A70-48F0-90CE-6D588C3B763C}.Release|x86.ActiveCfg = Release|Any CPU
 		{EAC6D464-1A70-48F0-90CE-6D588C3B763C}.Release|x86.Build.0 = Release|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Debug|x64.Build.0 = Debug|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Debug|x86.Build.0 = Debug|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Release|x64.ActiveCfg = Release|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Release|x64.Build.0 = Release|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Release|x86.ActiveCfg = Release|Any CPU
+		{E97D949D-5632-4D78-8F94-290C0C786CCC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,6 +20,8 @@ using Emgu.CV.ML;
 using System.Diagnostics;
 using BeyonSense.Helpers;
 using BeyonSense.Hsi;
+using System.Threading.Tasks;
+using HyperLib;
 
 namespace BeyonSense.ViewModels
 {
@@ -30,6 +32,8 @@ namespace BeyonSense.ViewModels
     public class MainViewModel : Screen
     {
         #region Properties
+
+        private float[,,] sc { get; set; }
 
         #region A list of all directories
         // A list of all directories from a selected directory
@@ -553,8 +557,8 @@ namespace BeyonSense.ViewModels
 
         #region Bitmap image format: 608x 800
 
-        private const int BmpHeight = 608;
-        private const int BmpWidth = 800;
+        private static int BmpHeight = 608;
+        private static int BmpWidth = 800;
 
         #endregion
 
@@ -859,9 +863,6 @@ namespace BeyonSense.ViewModels
                 {
                     //Selected Folder Path
                     RootPath = folderDialog.SelectedPath;
-
-                    //try to open HSI
-                    //FileIO.HyperLibOpenFIle(RootPath);
                 }
                 else
                 {
@@ -999,20 +1000,17 @@ namespace BeyonSense.ViewModels
                     // Enable clickable thumbnails when bitmap images are successfully loaded.
                     ClickableImage = true;
 
-                    // If six bitmap images, none or one csv file exist, save all the paths in public variables
-                    // Change the public picture bitmap images path values to bind image sources for six thumbnails
+                    //get image path
                     BmpPath1 = BmpList[0];
-                    //BmpPath2 = BmpList[1];
-                    //BmpPath3 = BmpList[2];
-                    //BmpPath4 = BmpList[3];
-                    //BmpPath5 = BmpList[4];
-                    //BmpPath6 = BmpList[5];
 
                     // Automatically, show first bitmap image as a main image
-                    //MainBmpImage = TypeConverter.StringToBmpSource(BmpList[0]);
-
+                    sc = FileIO.getRawDataToDataCube(BmpList[0]);
 
                     MainBmpImage = FileIO.OpenHSIrawToBMP(BmpList[0]);
+
+                    BmpHeight = (int)MainBmpImage.Height;
+                    BmpWidth = (int)MainBmpImage.Width;
+
                     PlusBool = true;
 
                     FileExplorerBool = true;
@@ -1185,8 +1183,8 @@ namespace BeyonSense.ViewModels
                     // Push the first image 
                     DrawLayer.Push(OverlayImage);
                 }
-            }
-
+                
+            } 
             // Popup window is closed by Cancel or ESC button
             else
             {
@@ -1649,6 +1647,8 @@ namespace BeyonSense.ViewModels
             Console.WriteLine("y: " + Clicked_Y.ToString());
             #endregion
 
+            
+
             #region Allocate color for new class
             if (newLabelColor == Colors.Transparent)
             {
@@ -1713,6 +1713,23 @@ namespace BeyonSense.ViewModels
             {
                 OKBool = true;
             }
+            #endregion
+
+            #region Get signal band of clicked pixel
+
+            ////Task.Run(() =>
+            ////{
+            ////    //load data cube into memory
+            ////    List<List<double>> data = FileIO.getBandsData(ClickedPosition, sc);
+
+            ////    for (int i = 0; i < data.Last().Count; i++)
+            ////    {
+            ////        Console.WriteLine("data: " + data.Last()[i]);
+            ////    }
+                
+
+            ////});
+
             #endregion
 
         }
