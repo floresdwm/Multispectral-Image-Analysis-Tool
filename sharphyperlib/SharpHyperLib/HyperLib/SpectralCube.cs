@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.IO;
 
+
 namespace HyperLib
 {
     public class SpectralCube
@@ -15,9 +16,9 @@ namespace HyperLib
         public DataFormat currentFormateObj { get; private set; }
         public SpectralCube(string pictureFilePath)
         {
-            if (File.Exists(pictureFilePath + ".raw"))
+            if (File.Exists(pictureFilePath))
             {
-                _PictureFilePath = pictureFilePath + ".raw";
+                _PictureFilePath = pictureFilePath;
                 Header = HeaderInfo.LoadFromFile(pictureFilePath);
             }
 

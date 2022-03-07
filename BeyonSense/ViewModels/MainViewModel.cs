@@ -987,7 +987,6 @@ namespace BeyonSense.ViewModels
 
                     return;
                 }
-
                 else
                 {
                     // Enable clickable thumbnails when bitmap images are successfully loaded.
@@ -996,14 +995,17 @@ namespace BeyonSense.ViewModels
                     // If six bitmap images, none or one csv file exist, save all the paths in public variables
                     // Change the public picture bitmap images path values to bind image sources for six thumbnails
                     BmpPath1 = BmpList[0];
-                    BmpPath2 = BmpList[1];
-                    BmpPath3 = BmpList[2];
-                    BmpPath4 = BmpList[3];
-                    BmpPath5 = BmpList[4];
-                    BmpPath6 = BmpList[5];
+                    //BmpPath2 = BmpList[1];
+                    //BmpPath3 = BmpList[2];
+                    //BmpPath4 = BmpList[3];
+                    //BmpPath5 = BmpList[4];
+                    //BmpPath6 = BmpList[5];
 
                     // Automatically, show first bitmap image as a main image
-                    MainBmpImage = TypeConverter.StringToBmpSource(BmpList[0]);
+                    //MainBmpImage = TypeConverter.StringToBmpSource(BmpList[0]);
+
+
+                    MainBmpImage = FileIO.OpenHSIrawToBMP(BmpList[0]);
                     PlusBool = true;
 
                     FileExplorerBool = true;
