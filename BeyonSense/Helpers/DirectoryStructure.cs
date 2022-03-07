@@ -49,10 +49,16 @@ namespace BeyonSense
             // ignoring any issues doing so
             try
             {
-                var fs = Directory.GetFiles(fullPath);
+                string[] fs = Directory.GetFiles(fullPath);
 
                 if (fs.Length > 0)
-                    items.AddRange(fs.Select(file => new DirectoryItem { FullPath = file, Type = DirectoryItemType.File }));
+                    for (int i = 0; i < fs.Count(); i++)
+                    {
+                        if (fs[i].EndsWith(".raw"))
+                        {
+                            items.Add(new DirectoryItem { FullPath = fs[i], Type = DirectoryItemType.File });
+                        }
+                    }
             }
             catch { }
 

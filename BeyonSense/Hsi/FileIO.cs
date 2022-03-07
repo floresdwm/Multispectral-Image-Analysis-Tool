@@ -12,52 +12,7 @@ using System.Windows.Forms;
 namespace BeyonSense.Hsi
 {
     public static class FileIO
-    {
-        public static void openHSImage(string folderPath)
-        {
-            try
-            {               
-
-                string SampleName = Path.GetFileName(folderPath);
-                string SampleImagePath = Path.Combine(folderPath, "capture", SampleName + ".raw");
-
-                using (Stream SampleStream = File.OpenRead(@SampleImagePath))
-                {
-                    int value = 0;
-                    List<int> imgData = new List<int>();
-                    while (true)
-                    {
-                        value = SampleStream.ReadByte();                        
-
-                        if (value != 0)
-                        {
-                            imgData.Add(value);
-                        }
-                        else if( value == -1)
-                        {
-                            break;
-                        }
-                    }
-                    
-                }
-                Console.WriteLine("done");
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
-
-        static byte[] PadLines(byte[] bytes, int rows, int columns)
-        {
-            int currentStride = columns; // 3
-            int newStride = columns;  // 4
-            byte[] newBytes = new byte[newStride * rows];
-            for (int i = 0; i < rows; i++)
-                Buffer.BlockCopy(bytes, currentStride * i, newBytes, newStride * i, currentStride);
-            return newBytes;
-        }
+    {        
 
         public static void HyperLibOpenFIle(string path)
         {

@@ -855,11 +855,21 @@ namespace BeyonSense.ViewModels
             WinForms.DialogResult result = folderDialog.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
             {
-                //Selected Folder Path
-                RootPath = folderDialog.SelectedPath;
+                if (folderDialog.SelectedPath.Contains("capture"))
+                {
+                    //Selected Folder Path
+                    RootPath = folderDialog.SelectedPath;
 
-                //try to open HSI
-                FileIO.HyperLibOpenFIle(RootPath);
+                    //try to open HSI
+                    //FileIO.HyperLibOpenFIle(RootPath);
+                }
+                else
+                {
+                    //Selected Folder Path
+                    RootPath = folderDialog.SelectedPath + "\\capture\\";
+
+                }
+
 
             }
         }
@@ -941,7 +951,7 @@ namespace BeyonSense.ViewModels
                     // Count the number of bitmap image and csv file
                     switch (exetension)
                     {
-                        case ".bmp":
+                        case ".raw": //.bmp
                             BmpList.Add(filePath);
                             num_bmp++;
                             break;
@@ -966,14 +976,14 @@ namespace BeyonSense.ViewModels
                 }
 
                 // Error message to choose correct directory again: six bitmap images, an optional csv file
-                if (num_bmp != 6 || num_csv > 1)
+                if (num_bmp == 0 || num_csv > 1)
                 {
                     ResetImages();
                     Items.Clear();
                     // Disable to load a model
                     FileExplorerBool = false;
 
-                    MessageBox.Show("Wrong Directory\nPleae make sure the folder has six bitmap images and an optional csv file.");
+                    MessageBox.Show("Wrong Directory\nPleae make sure the folder has images and an optional csv file.");
 
                     return;
                 }
@@ -2057,26 +2067,23 @@ namespace BeyonSense.ViewModels
             }
 
             try
-            {
-                foreach (string d in Directory.GetDirectories(sDir))
+            {                
+
+                foreach (string f in Directory.GetFiles(sDir))
                 {
-
-                    foreach (string f in Directory.GetFiles(d))
+                    // Check it file exetension is csv or not
+                    if (System.IO.Path.GetExtension(f) == ".csv")
                     {
-                        // Check it file exetension is csv or not
-                        if (System.IO.Path.GetExtension(f) == ".csv")
-                        {
-                            // Add csv file path in the l`ist
-                            CsvFilePaths.Add(f);
-                        }
-
-                        if (System.IO.Path.GetExtension(f) == ".bmp")
-                        {
-                            bmpcount++;
-                        }
+                        // Add csv file path in the l`ist
+                        CsvFilePaths.Add(f);
                     }
-                    DirSearch(d, cnt + 1);
+
+                    if (System.IO.Path.GetExtension(f) == ".raw") //original is .bmp
+                    {
+                        bmpcount++;
+                    }
                 }
+                
             }
 
             // In case of stack overflow
@@ -2265,7 +2272,7 @@ namespace BeyonSense.ViewModels
             DirSearch(_rootPath);
 
             // The folder has to have at least six Bmp files
-            if (bmpcount / 6 > 0 && bmpcount % 6 == 0)
+            if (bmpcount != 0)
             {
                 // Read csv file only if Dirsearch is successfully completed
                 if (!recursiveAlert)
