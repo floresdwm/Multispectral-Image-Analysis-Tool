@@ -1,7 +1,7 @@
 # Hyperspectral Image Analysis Gui Tool
 2022 Douglas William Menezes Flores
 
-![alt text](https://github.com/floresdwm/Multispectral-Image-Analysis-Tool/blob/developments-hsi/Images/prototipo-hsi-gui-tool.png)
+![alt text](https://github.com/floresdwm/Multispectral-Image-Analysis-Tool/blob/developments-hsi/Images/prototipo-hsi-gui-tool-2.png)
 
 ## Main goals
 1. Open SPECIM data cube files (.hdr/.raw)
