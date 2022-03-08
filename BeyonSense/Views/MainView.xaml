@@ -1,76 +1,81 @@
-﻿<Window x:Class="BeyonSense.Views.MainView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:pb="clr-namespace:PushBindingExtension"
-        xmlns:cal="http://www.caliburnproject.org"
-        xmlns:local="clr-namespace:BeyonSense"
-        mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
-        Title="HyperSpectral GUI tool" Height="600" Width="800"
-        MinHeight="620" MinWidth="800"
-        Icon="/Pictures/Train.png"
-        >
-    <!-- Resources -->
+﻿<Window
+    x:Class="BeyonSense.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:local="clr-namespace:BeyonSense"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pb="clr-namespace:PushBindingExtension"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+    Title="HyperSpectral GUI tool"
+    Width="800"
+    Height="600"
+    MinWidth="1080"
+    MinHeight="620"
+    Icon="/Pictures/Train.png"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <!--  Resources  -->
     <Window.Resources>
         <Style x:Key="OpenImage" TargetType="Image">
-            <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/OpenFolder.png"/>
+            <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/OpenFolder.png" />
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="false">
-                    <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/OpenFolder_disable.png"/>
+                    <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/OpenFolder_disable.png" />
                 </Trigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="SaveImage" TargetType="Image">
-            <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/Save.png"/>
+            <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/Save.png" />
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="false">
-                    <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/Save_disable.png"/>
+                    <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/Save_disable.png" />
                 </Trigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="TrainImage" TargetType="Image">
-            <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/Train.png"/>
+            <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/Train.png" />
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="false">
-                    <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/Train_disable.png"/>
+                    <Setter Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/Train_disable.png" />
                 </Trigger>
             </Style.Triggers>
         </Style>
 
         <Style x:Key="ButtonText" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="White" />
             <Style.Triggers>
                 <Trigger Property="IsEnabled" Value="false">
-                    <Setter Property="Foreground" Value="Gray"/>
+                    <Setter Property="Foreground" Value="Gray" />
                 </Trigger>
             </Style.Triggers>
 
         </Style>
 
         <Style x:Key="DatagridStyle" TargetType="DataGrid">
-            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource link}">
-
-            </Setter>
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource link}" />
         </Style>
         <Style x:Key="link" TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="Black"></Setter>
-            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Foreground" Value="White" />
         </Style>
 
-        <Style TargetType="{x:Type CheckBox}" x:Key="ToggleSwitchStyle">
+        <Style x:Key="ToggleSwitchStyle" TargetType="{x:Type CheckBox}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type CheckBox}">
                         <StackPanel Orientation="Horizontal">
-                            <Image x:Name="checkboxImage" Source="pack://application:,,,/BeyonSense;component//Pictures/ToggleOff.png" Width="32"/>
-                            <ContentPresenter/>
+                            <Image
+                                x:Name="checkboxImage"
+                                Width="32"
+                                Source="pack://application:,,,/BeyonSense;component//Pictures/ToggleOff.png" />
+                            <ContentPresenter />
                         </StackPanel>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/ToggleOn.png"/>
+                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://application:,,,/BeyonSense;component//Pictures/ToggleOn.png" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -81,32 +86,44 @@
 
     </Window.Resources>
 
-    <!-- Window 위의 control panel customize해서 이쁘게 하기 -->
+    <!--  Window 위의 control panel customize해서 이쁘게 하기  -->
 
     <Border Padding="10" Background="#2b2b2e">
-        <!-- Grid background 추가: UI beautifying-->
+        <!--  Grid background 추가: UI beautifying  -->
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="5*"/>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="5*" />
             </Grid.RowDefinitions>
 
-            <!-- Row 0 -->
+            <!--  Row 0  -->
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
-                    <Button x:Name="Open" ToolTip="Open project folder"
-                             HorizontalAlignment="Left" VerticalAlignment="Center" Height="100"
-                             Grid.Row="0" Width="199">
+                <StackPanel
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal">
+                    <Button
+                        x:Name="Open"
+                        Grid.Row="0"
+                        Width="199"
+                        Height="100"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        ToolTip="Open project folder">
 
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="/Pictures/OpenFolder.png" Height="25"/>
-                            <TextBlock Text="Open" VerticalAlignment="Center"
-                                   Margin="10" FontSize="17" Foreground="White"/>
+                            <Image Height="25" Source="/Pictures/OpenFolder.png" />
+                            <TextBlock
+                                Margin="10"
+                                VerticalAlignment="Center"
+                                FontSize="17"
+                                Foreground="White"
+                                Text="Open" />
                         </StackPanel>
 
 
@@ -157,17 +174,17 @@
                                     </TextBlock.Style>
 
                                 </TextBlock>
-                                -->
-                <!-- Toggle Button -->
+                -->
+                <!--  Toggle Button  -->
                 <!--
                                 <CheckBox x:Name="ToggleSwitch" Style="{StaticResource ToggleSwitchStyle}" Margin="5,3"
                                           IsEnabled="{Binding ToggleIsEnable}" IsChecked="{Binding ToggleBool}"/>
 
-                                -->
-                <!-- Progress bar 
+                -->
+                <!-- Progress bar
                                 <ProgressBar x:Name="Progressbar" Height="15" Width="100" Maximum="100"
                                              Visibility="Visible" Value="{Binding Percentage}"/>
-                                -->
+                -->
                 <!--
 
                             </StackPanel>
@@ -194,7 +211,7 @@
                                     </i:Interaction.Triggers>
                                 </Button>
 
-                                <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding ModelPath}" 
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding ModelPath}"
                                            FontSize="10" TextWrapping="Wrap" Foreground="White"/>
                             </Grid>
 
@@ -207,36 +224,42 @@
 
             </Grid>
 
-            <!-- Row 1-->
+            <!--  Row 1  -->
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="300" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Column 0: Image set -->
+                <!--  Column 0: Image set  -->
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
 
 
 
-                    <!-- Column 3: Table and Buttons-->
+                    <!--  Column 3: Table and Buttons  -->
                     <StackPanel Orientation="Vertical">
 
-                        <TextBlock Grid.Row="0" Text="Image Set" 
-                               FontSize="15" Margin="5, 0, 0, 5" Foreground="White"/>
+                        <TextBlock
+                            Grid.Row="0"
+                            Margin="5,0,0,5"
+                            FontSize="15"
+                            Foreground="White"
+                            Text="Image Set" />
 
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
 
-                            <!-- Treeview -->
-                            <TreeView MinHeight="70" x:Name="DirectoryTree" ItemsSource="{Binding Items}"
-                                  SelectedValuePath="FullPath">
+                            <!--  Treeview  -->
+                            <TreeView
+                                x:Name="DirectoryTree"
+                                MinHeight="70"
+                                ItemsSource="{Binding Items}"
+                                SelectedValuePath="FullPath">
                                 <TreeView.ItemContainerStyle>
                                     <Style TargetType="{x:Type TreeViewItem}">
                                         <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
@@ -247,22 +270,28 @@
                                 <TreeView.ItemTemplate>
                                     <HierarchicalDataTemplate ItemsSource="{Binding Children}">
 
-                                        <!-- Binding DataContext is needed if the structure is being nested -->
-                                        <StackPanel x:Name="TreeElement" Orientation="Horizontal"
-                                                cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=DirectoryTree}">
+                                        <!--  Binding DataContext is needed if the structure is being nested  -->
+                                        <StackPanel
+                                            x:Name="TreeElement"
+                                            cal:Action.TargetWithoutContext="{Binding DataContext, ElementName=DirectoryTree}"
+                                            Orientation="Horizontal">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="MouseDown">
                                                     <cal:ActionMessage MethodName="TreeElementMouseDown">
-                                                        <cal:Parameter Value="{Binding FullPath}"/>
+                                                        <cal:Parameter Value="{Binding FullPath}" />
                                                     </cal:ActionMessage>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
 
 
-                                            <Image Width="20" Margin="3" 
-                                        Source="{Binding ImageName,
-                                            Converter={x:Static local:HeaderToImageConverter.Instance}}"/>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}" Foreground="White"/>
+                                            <Image
+                                                Width="20"
+                                                Margin="3"
+                                                Source="{Binding ImageName, Converter={x:Static local:HeaderToImageConverter.Instance}}" />
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Foreground="White"
+                                                Text="{Binding Name}" />
                                         </StackPanel>
 
 
@@ -272,40 +301,60 @@
                             </TreeView>
                         </ScrollViewer>
 
-                        <!-- Table -->
-                        <!-- Contents binding-->
-                        <DataGrid AutoGenerateColumns="False" Background="#FF2B2B2C"
-                        Height="200" ItemsSource="{Binding ClassPoints}"
-                        HorizontalAlignment="Center" Margin="0,10"
-                        SelectionMode="Extended" SelectionUnit="FullRow"
-                        CanUserReorderColumns="False" CanUserResizeColumns="False" 
-                        CanUserResizeRows="False" CanUserSortColumns="False"
-                        IsReadOnly="True"
-                                  Padding="2"
-                        SelectedItem="{Binding Path=SelectedRow, Mode=OneWayToSource}" 
-                        RowHeaderWidth="0" RowBackground="#2b2b2c"
-                        Style="{DynamicResource DatagridStyle}" BorderBrush="#FF3B3B3B" Width="200">
+                        <!--  Table  -->
+                        <!--  Contents binding  -->
+                        <DataGrid
+                            Width="200"
+                            Height="200"
+                            Margin="0,10"
+                            Padding="2"
+                            HorizontalAlignment="Center"
+                            AutoGenerateColumns="False"
+                            Background="#FF2B2B2C"
+                            BorderBrush="#FF3B3B3B"
+                            CanUserReorderColumns="False"
+                            CanUserResizeColumns="False"
+                            CanUserResizeRows="False"
+                            CanUserSortColumns="False"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding ClassPoints}"
+                            RowBackground="#2b2b2c"
+                            RowHeaderWidth="0"
+                            SelectedItem="{Binding Path=SelectedRow, Mode=OneWayToSource}"
+                            SelectionMode="Extended"
+                            SelectionUnit="FullRow"
+                            Style="{DynamicResource DatagridStyle}">
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn Foreground="White"
-                                MinWidth="90" Header="Class" Binding="{Binding ClassName}"/>
+                                <DataGridTextColumn
+                                    MinWidth="90"
+                                    Binding="{Binding ClassName}"
+                                    Foreground="White"
+                                    Header="Class" />
 
-                                <DataGridTextColumn Foreground="White"
-                                MinWidth="70" Header="Points" Binding="{Binding NumPoints}"/>
+                                <DataGridTextColumn
+                                    MinWidth="70"
+                                    Binding="{Binding NumPoints}"
+                                    Foreground="White"
+                                    Header="Points" />
                             </DataGrid.Columns>
                         </DataGrid>
 
-                        <!-- Adding element in the table -->
+                        <!--  Adding element in the table  -->
                         <Grid Height="30" Margin="0,0,0,20">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <!-- Plus Button -->
-                            <local:TablePlusButton Grid.Column="0" x:Name="PlusButton" Height="20" Width="25"
-                                               IsEnabled="{Binding PlusBool}">
+                            <!--  Plus Button  -->
+                            <local:TablePlusButton
+                                x:Name="PlusButton"
+                                Grid.Column="0"
+                                Width="25"
+                                Height="20"
+                                IsEnabled="{Binding PlusBool}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                         <cal:ActionMessage MethodName="PlusClick" />
@@ -313,8 +362,10 @@
                                 </i:Interaction.Triggers>
                             </local:TablePlusButton>
 
-                            <local:RevertButton Grid.Column="1" Width="20"
-                                            IsEnabled="{Binding CanBeReverted}">
+                            <local:RevertButton
+                                Grid.Column="1"
+                                Width="20"
+                                IsEnabled="{Binding CanBeReverted}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                         <cal:ActionMessage MethodName="Revert" />
@@ -322,9 +373,11 @@
                                 </i:Interaction.Triggers>
                             </local:RevertButton>
 
-                            <!-- Ok button -->
-                            <local:OkButton Grid.Column="2" Width="20"
-                                            IsEnabled="{Binding OKBool}">
+                            <!--  Ok button  -->
+                            <local:OkButton
+                                Grid.Column="2"
+                                Width="20"
+                                IsEnabled="{Binding OKBool}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                         <cal:ActionMessage MethodName="AddNewLabel" />
@@ -335,53 +388,74 @@
                         </Grid>
 
 
-                        <!-- ColorBox -->
+                        <!--  ColorBox  -->
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <!-- TextBox-->
-                            <TextBlock Grid.Column="0" Text="Color" Foreground="White" HorizontalAlignment="Center"/>
+                            <!--  TextBox  -->
+                            <TextBlock
+                                Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                Foreground="White"
+                                Text="Color" />
 
-                            <!-- Rectangle -->
-                            <Rectangle Grid.Column ="1" Margin="20,0">
+                            <!--  Rectangle  -->
+                            <Rectangle Grid.Column="1" Margin="20,0">
                                 <Rectangle.Fill>
-                                    <SolidColorBrush Color="{Binding Colour}"/>
+                                    <SolidColorBrush Color="{Binding Colour}" />
                                 </Rectangle.Fill>
                             </Rectangle>
 
                         </Grid>
 
-                        <!-- Num of points-->
+                        <!--  Num of points  -->
                         <Grid Margin="0,10">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <!-- TextBox-->
-                            <TextBlock Grid.Column="0" Text="Num of Pixel" Foreground="White" HorizontalAlignment="Center"/>
+                            <!--  TextBox  -->
+                            <TextBlock
+                                Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                Foreground="White"
+                                Text="Num of Pixel" />
 
-                            <!-- TextBox-->
-                            <!-- #Pixel binding-->
-                            <TextBlock Grid.Column="1" Text="{Binding NumPoints}" HorizontalAlignment="Center" Foreground="White"/>
+                            <!--  TextBox  -->
+                            <!--  #Pixel binding  -->
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                Foreground="White"
+                                Text="{Binding NumPoints}" />
                         </Grid>
 
-                        <!-- Save and Train Buttons-->
+                        <!--  Save and Train Buttons  -->
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <!-- Save Button-->
-                            <Button Grid.Column="0" HorizontalAlignment="Center" ToolTip="Save" ToolTipService.ShowOnDisabled="True"
-                                Width="80" Height="30" IsEnabled="{Binding SaveBool}">
+                            <!--  Save Button  -->
+                            <Button
+                                Grid.Column="0"
+                                Width="80"
+                                Height="30"
+                                HorizontalAlignment="Center"
+                                IsEnabled="{Binding SaveBool}"
+                                ToolTip="Save"
+                                ToolTipService.ShowOnDisabled="True">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Height="20" Style="{StaticResource SaveImage}"/>
-                                    <TextBlock Text="Save" Margin="5,0" Style="{StaticResource ButtonText}"/>
+                                    <Image Height="20" Style="{StaticResource SaveImage}" />
+                                    <TextBlock
+                                        Margin="5,0"
+                                        Style="{StaticResource ButtonText}"
+                                        Text="Save" />
                                 </StackPanel>
 
                                 <i:Interaction.Triggers>
@@ -393,12 +467,21 @@
 
 
 
-                            <!-- TODO: Train Button-->
-                            <Button Grid.Column="1" HorizontalAlignment="Center" ToolTip="Train" ToolTipService.ShowOnDisabled="True"
-                                Width="80" Height="30" IsEnabled="{Binding TrainBool}">
+                            <!--  TODO: Train Button  -->
+                            <Button
+                                Grid.Column="1"
+                                Width="80"
+                                Height="30"
+                                HorizontalAlignment="Center"
+                                IsEnabled="{Binding TrainBool}"
+                                ToolTip="Train"
+                                ToolTipService.ShowOnDisabled="True">
                                 <StackPanel Orientation="Horizontal">
-                                    <Image Height="20" Style="{StaticResource TrainImage}"/>
-                                    <TextBlock Text="Train" Margin="5,0" Style="{StaticResource ButtonText}"/>
+                                    <Image Height="20" Style="{StaticResource TrainImage}" />
+                                    <TextBlock
+                                        Margin="5,0"
+                                        Style="{StaticResource ButtonText}"
+                                        Text="Train" />
                                 </StackPanel>
                             </Button>
 
@@ -408,22 +491,29 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Column 2: Main Image-->
-                <Grid Grid.Column ="2">
+                <!--  Column 2: Main Image  -->
+                <Grid Grid.Column="1">
 
-                    <!-- Original Image -->
-                    <Image Margin="5" x:Name="MainImage"  Source="{Binding MainBmpImage}"/>
+                    <!--  Original Image  -->
+                    <Image
+                        x:Name="MainImage"
+                        Margin="5"
+                        Source="{Binding MainBmpImage}" />
 
-                    <!-- Image source binding-->
-                    <Image Margin="5" x:Name="OverlayImage" Source="{Binding OverlayImage}" IsEnabled="{Binding ImageBool}">
+                    <!--  Image source binding  -->
+                    <Image
+                        x:Name="OverlayImage"
+                        Margin="5"
+                        IsEnabled="{Binding ImageBool}"
+                        Source="{Binding OverlayImage}">
 
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Setter Property="pb:PushBindingManager.StylePushBindings">
                                     <Setter.Value>
                                         <pb:PushBindingCollection>
-                                            <pb:PushBinding TargetProperty="ActualHeight" Path="MyHeight"/>
-                                            <pb:PushBinding TargetProperty="ActualWidth" Path="MyWidth"/>
+                                            <pb:PushBinding Path="MyHeight" TargetProperty="ActualHeight" />
+                                            <pb:PushBinding Path="MyWidth" TargetProperty="ActualWidth" />
                                         </pb:PushBindingCollection>
                                     </Setter.Value>
                                 </Setter>
@@ -433,14 +523,82 @@
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                 <cal:ActionMessage MethodName="ClickPoint">
-                                    <cal:Parameter Value="$eventArgs"/>
-                                    <cal:Parameter Value="$source"/>
+                                    <cal:Parameter Value="$eventArgs" />
+                                    <cal:Parameter Value="$source" />
                                 </cal:ActionMessage>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
 
                     </Image>
                 </Grid>
+
+                <Grid Grid.Column="2">
+
+                    <syncfusion:SfChart
+                        x:Name="chart1"
+                        MinHeight="440"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Margin="0,7"
+                        Foreground="DarkGray"
+                        Header="Pixel explore"
+                        Series="{Binding lineSerieCollection}">
+
+
+                        <syncfusion:SfChart.Legend>
+                            <syncfusion:ChartLegend CheckBoxVisibility="Visible" DockPosition="Top">
+                                <syncfusion:ChartLegend.Template>
+                                    <ControlTemplate>
+                                        <ScrollViewer
+                                            Margin="30,5,30,5"
+                                            HorizontalScrollBarVisibility="Auto"
+                                            VerticalScrollBarVisibility="Auto">
+                                            <ItemsPresenter />
+                                        </ScrollViewer>
+                                    </ControlTemplate>
+                                </syncfusion:ChartLegend.Template>
+                            </syncfusion:ChartLegend>
+                        </syncfusion:SfChart.Legend>
+
+                        <syncfusion:SfChart.Behaviors>
+
+                            <syncfusion:ChartTrackBallBehavior AxisLabelAlignment="Center" LabelDisplayMode="NearestPoint" />
+
+                            <syncfusion:ChartSelectionBehavior EnableSegmentSelection="True" SelectionStyle="Single" />
+
+                            <syncfusion:ChartZoomPanBehavior
+                                EnableSelectionZooming="True"
+                                EnableZoomingToolBar="True"
+                                HorizontalPosition="Left"
+                                ToolBarBackground="#FF303030"
+                                ToolBarItemHeight="15"
+                                ToolBarItemWidth="15"
+                                VerticalPosition="Top" />
+
+                        </syncfusion:SfChart.Behaviors>
+
+                        <syncfusion:SfChart.PrimaryAxis>
+                            <syncfusion:NumericalAxis
+                                EnableAutoIntervalOnZooming="True"
+                                Header="Wavelenghts (index)"
+                                Interval="0"
+                                LabelsIntersectAction="Hide"
+                                Maximum="250"
+                                Minimum="0"
+                                ShowTrackBallInfo="True" />
+                        </syncfusion:SfChart.PrimaryAxis>
+
+                        <syncfusion:SfChart.SecondaryAxis>
+                            <syncfusion:NumericalAxis
+                                EnableAutoIntervalOnZooming="True"
+                                Header="Reflectance raw value"
+                                Interval="0"
+                                LabelsIntersectAction="Hide"
+                                ShowTrackBallInfo="True" />
+                        </syncfusion:SfChart.SecondaryAxis>
+
+                    </syncfusion:SfChart>
+                </Grid>              
 
 
             </Grid>

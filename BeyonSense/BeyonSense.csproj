@@ -118,7 +118,14 @@
       <HintPath>..\packages\PropertyChanged.Fody.2.1.4\lib\netstandard1.0\PropertyChanged.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=19.4460.0.55, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.19.4.0.55\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfChart.WPF, Version=19.4460.0.55, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.SfChart.WPF.19.4.0.55\lib\net46\Syncfusion.SfChart.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows" />
@@ -170,6 +177,7 @@
     <Compile Include="Helpers\PushBinding\PushBinding.cs" />
     <Compile Include="Helpers\PushBinding\PushBindingCollection.cs" />
     <Compile Include="Helpers\PushBinding\PushBindingManager.cs" />
+    <Compile Include="Models\SfDataPoint.cs" />
     <Compile Include="UserControls\OkButton.xaml.cs">
       <DependentUpon>OkButton.xaml</DependentUpon>
     </Compile>

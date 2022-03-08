@@ -22,6 +22,8 @@ using BeyonSense.Helpers;
 using BeyonSense.Hsi;
 using System.Threading.Tasks;
 using HyperLib;
+using System.Configuration;
+using Syncfusion.UI.Xaml.Charts;
 
 namespace BeyonSense.ViewModels
 {
@@ -32,6 +34,39 @@ namespace BeyonSense.ViewModels
     public class MainViewModel : Screen
     {
         #region Properties
+
+        private List<double> data;
+
+        public List<double> Data
+        {
+            get { return data; }
+            set { data = value; NotifyOfPropertyChange(() => Data); }
+        }
+
+        private ObservableCollection<SfDataPoint> _selectedCustomerDataToPlot;
+
+        public ObservableCollection<SfDataPoint> selectedCustomerDataToPlot
+        {
+            get { return _selectedCustomerDataToPlot; }
+            set { _selectedCustomerDataToPlot = value; NotifyOfPropertyChange(() => selectedCustomerDataToPlot); }
+        }
+
+        private FastLineSeries _lineSerie;
+
+        public FastLineSeries lineSerie
+        {
+            get { return _lineSerie; }
+            set { _lineSerie = value; NotifyOfPropertyChange(() => lineSerie); }
+        }
+
+        private ChartSeriesCollection _lineSerieCollection;
+
+        public ChartSeriesCollection lineSerieCollection
+        {
+            get { return _lineSerieCollection; }
+            set { _lineSerieCollection = value; NotifyOfPropertyChange(() => lineSerieCollection); }
+        }
+
 
         private float[,,] sc { get; set; }
 
@@ -835,7 +870,13 @@ namespace BeyonSense.ViewModels
         /// </summary>
         public MainViewModel()
         {
-            MainBmpImage = DefaultImageSource();            
+            MainBmpImage = DefaultImageSource();
+
+            selectedCustomerDataToPlot = new ObservableCollection<SfDataPoint>();
+            lineSerieCollection = new ChartSeriesCollection();
+
+
+
         }
 
         #endregion
@@ -1738,18 +1779,26 @@ namespace BeyonSense.ViewModels
 
             #region Get signal band of clicked pixel
 
-            ////Task.Run(() =>
-            ////{
-            ////    //load data cube into memory
-            ////    List<List<double>> data = FileIO.getBandsData(ClickedPosition, sc);
+            Task.Run(() =>
+            {
+                //load data cube into memory
+                List<List<double>> data = FileIO.getBandsData(ClickedPosition, sc);
 
-            ////    for (int i = 0; i < data.Last().Count; i++)
-            ////    {
-            ////        Console.WriteLine("data: " + data.Last()[i]);
-            ////    }
-                
+                //for (int i = 0; i < data.Last().Count; i++)
+                //{
+                //    Console.WriteLine("data: " + data.Last()[i]);
+                //}
 
-            ////});
+                Application.Current.Dispatcher.BeginInvoke(new System.Action(() => {
+                    plotSelectedItems(data.Last());
+                }));
+
+               
+
+
+
+
+            });
 
             #endregion
 
@@ -2462,6 +2511,57 @@ namespace BeyonSense.ViewModels
         #endregion
 
         #endregion
+
+        #region Chart
+
+        public void plotSelectedItems(List<double> data)
+        {
+            try
+            {
+                lineSerieCollection = new ChartSeriesCollection();
+                selectedCustomerDataToPlot = new ObservableCollection<SfDataPoint>();
+                SfDataPoint dataPoint = new SfDataPoint();
+
+                if (data != null && data.Count != 0)
+                {
+                    for (int i = 0; i != data.Count(); i++)
+                    {                        
+                        
+                        dataPoint = new SfDataPoint()
+                        {
+                            X = i,
+                            Y = data[i],
+                            Label = i.ToString()
+                        };
+                        selectedCustomerDataToPlot.Add(dataPoint);                        
+                    }
+
+                    if (selectedCustomerDataToPlot != null && selectedCustomerDataToPlot.Count != 0)
+                    {
+                        //create line serie for each signal of each sample
+                        lineSerie = new FastLineSeries()
+                        {
+                            ItemsSource = selectedCustomerDataToPlot,
+                            XBindingPath = "X",
+                            YBindingPath = "Y",
+                            Label = selectedCustomerDataToPlot[0].Label
+                        };
+
+                        //try to put all collection dinamically binded into view 
+                        lineSerieCollection.Add(lineSerie);
+                        selectedCustomerDataToPlot = new ObservableCollection<SfDataPoint>();
+                    }
+                }
+            }
+            catch (Exception plotNull)
+            {
+                Console.WriteLine("Plot Null: " + plotNull.ToString());
+            }
+        }
+
+        #endregion  
+
+
 
     }
 }
