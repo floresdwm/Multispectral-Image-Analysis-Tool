@@ -346,6 +346,7 @@
     </Content>
     <Resource Include="Pictures\ToggleOff.png" />
     <Resource Include="Pictures\ToggleOn.png" />
+    <Resource Include="Pictures\Before-After-Nuts-2.jpg" />
     <Content Include="vcruntime140.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

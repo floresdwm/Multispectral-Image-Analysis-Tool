@@ -9,9 +9,9 @@
         xmlns:local="clr-namespace:BeyonSense"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="BeyonSense" Height="600" Width="800"
+        Title="HyperSpectral GUI tool" Height="600" Width="800"
         MinHeight="600" MinWidth="800"
-        Icon="/Pictures/BeyonSense_Icon.png"
+        Icon="/Pictures/Train.png"
         >
     <!-- Resources -->
     <Window.Resources>
@@ -120,17 +120,19 @@
 
 
 
-                    <Button x:Name="Capture"  ToolTip="Capture"
+                    <!--<Button x:Name="Capture"  ToolTip="Capture"
                              HorizontalAlignment="Left" VerticalAlignment="Center" Height="50"
                              Grid.Row="0" Width="130" Margin="20,0,0,20">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/Pictures/capture.png" Height="34"/>
                             <TextBlock Text="Capture" Foreground="White" Margin="10" FontSize="17" VerticalAlignment="Center"/>
                         </StackPanel>
-                    </Button>
+                    </Button>-->
+                
+                
                 </StackPanel>
 
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <!--<StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                     <Border BorderThickness="1" BorderBrush="White" CornerRadius="5" Margin="0,0,0,20"
                             Width="350" Height="70">
                         <Grid>
@@ -155,14 +157,14 @@
                                     </TextBlock.Style>
 
                                 </TextBlock>
-                                <!-- Toggle Button -->
+                                --><!-- Toggle Button --><!--
                                 <CheckBox x:Name="ToggleSwitch" Style="{StaticResource ToggleSwitchStyle}" Margin="5,3"
                                           IsEnabled="{Binding ToggleIsEnable}" IsChecked="{Binding ToggleBool}"/>
 
-                                <!-- Progress bar 
+                                --><!-- Progress bar 
                                 <ProgressBar x:Name="Progressbar" Height="15" Width="100" Maximum="100"
                                              Visibility="Visible" Value="{Binding Percentage}"/>
-                                -->
+                                --><!--
 
                             </StackPanel>
 
@@ -197,7 +199,8 @@
                     </Border>
 
 
-                </StackPanel>
+                </StackPanel>-->
+            
             </Grid>
 
             <!-- Row 1-->
@@ -265,7 +268,7 @@
 
 
                 <!-- Column 1: Thumbnails-->
-                <Grid Grid.Column="1">
+                <!--<Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -275,7 +278,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Six clickable thumbnails -->
+                    --><!-- Six clickable thumbnails --><!--
                     <Button x:Name="BmpImage1" Grid.Row="0" Margin="5" 
                             HorizontalAlignment="Center"
                             ToolTip="Wavelength 660 nm"
@@ -447,7 +450,7 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                </Grid>
+                </Grid>-->
 
 
 
@@ -457,10 +460,10 @@
                 <Grid Grid.Column ="2">
 
                     <!-- Original Image -->
-                    <Image x:Name="MainImage"  Source="{Binding MainBmpImage}"/>
+                    <Image Margin="5" x:Name="MainImage"  Source="{Binding MainBmpImage}"/>
 
                     <!-- Image source binding-->
-                    <Image x:Name="OverlayImage" Source="{Binding OverlayImage}" IsEnabled="{Binding ImageBool}">
+                    <Image Margin="5" x:Name="OverlayImage" Source="{Binding OverlayImage}" IsEnabled="{Binding ImageBool}">
 
                         <Image.Style>
                             <Style TargetType="Image">

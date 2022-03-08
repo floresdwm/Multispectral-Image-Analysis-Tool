@@ -1000,16 +1000,37 @@ namespace BeyonSense.ViewModels
                     // Enable clickable thumbnails when bitmap images are successfully loaded.
                     ClickableImage = true;
 
-                    //get image path
-                    BmpPath1 = BmpList[0];
+                    
 
                     // Automatically, show first bitmap image as a main image
-                    sc = FileIO.getRawDataToDataCube(BmpList[0]);
+                    if(BmpPath1 != BmpList[0])
+                    {
+                        //get image path
+                        BmpPath1 = BmpList[0];
 
-                    MainBmpImage = FileIO.OpenHSIrawToBMP(BmpList[0]);
+                        GC.Collect();
+                        sc = null;
 
-                    BmpHeight = (int)MainBmpImage.Height;
-                    BmpWidth = (int)MainBmpImage.Width;
+                        Task.Run(() => { sc = FileIO.getRawDataToDataCube(BmpList[0]); });
+                        MainBmpImage = FileIO.OpenHSIrawToBMP(BmpList[0]);
+                    } 
+                    
+                    if(MainBmpImage != null)
+                    {
+                        BmpHeight = (int)MainBmpImage.Height;
+                        BmpWidth = (int)MainBmpImage.Width;
+                    }
+                    else
+                    {
+                        ResetImages();
+                        Items.Clear();
+                        // Disable to load a model
+                        FileExplorerBool = false;
+
+                        MessageBox.Show("Wrong Directory\nPleae make sure the folder has images and an optional csv file.");
+
+                        return;
+                    }                    
 
                     PlusBool = true;
 
@@ -1395,11 +1416,11 @@ namespace BeyonSense.ViewModels
 
             #region Image variable
             Image<Gray, Byte> img1 = new Image<Gray, Byte>(bmpPath1);
-            Image<Gray, Byte> img2 = new Image<Gray, Byte>(bmpPath2);
-            Image<Gray, Byte> img3 = new Image<Gray, Byte>(bmpPath3);
-            Image<Gray, Byte> img4 = new Image<Gray, Byte>(bmpPath4);
-            Image<Gray, Byte> img5 = new Image<Gray, Byte>(bmpPath5);
-            Image<Gray, Byte> img6 = new Image<Gray, Byte>(bmpPath6);
+            //Image<Gray, Byte> img2 = new Image<Gray, Byte>(bmpPath2);
+            //Image<Gray, Byte> img3 = new Image<Gray, Byte>(bmpPath3);
+            //Image<Gray, Byte> img4 = new Image<Gray, Byte>(bmpPath4);
+            //Image<Gray, Byte> img5 = new Image<Gray, Byte>(bmpPath5);
+            //Image<Gray, Byte> img6 = new Image<Gray, Byte>(bmpPath6);
             #endregion
 
 
@@ -1572,11 +1593,11 @@ namespace BeyonSense.ViewModels
                                 if (inner)
                                 {
                                     wr.Write((float)img1.Data[min + i, j, 0]);
-                                    wr.Write((float)img2.Data[min + i, j, 0]);
-                                    wr.Write((float)img3.Data[min + i, j, 0]);
-                                    wr.Write((float)img4.Data[min + i, j, 0]);
-                                    wr.Write((float)img5.Data[min + i, j, 0]);
-                                    wr.Write((float)img6.Data[min + i, j, 0]);
+                                    //wr.Write((float)img2.Data[min + i, j, 0]);
+                                    //wr.Write((float)img3.Data[min + i, j, 0]);
+                                    //wr.Write((float)img4.Data[min + i, j, 0]);
+                                    //wr.Write((float)img5.Data[min + i, j, 0]);
+                                    //wr.Write((float)img6.Data[min + i, j, 0]);
 
                                 }
 
